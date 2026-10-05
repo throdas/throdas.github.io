@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coguaplast — Theresa Rodas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+<style>
+  :root{
+    --bg:#F8F8F5;
+    --text:#111111;
+    --text-2:#6B6B6B;
+    --border:#E9E9E9;
+    --surface:#FFFFFF;
+    --accent:#0934FF;
+    --display: 'General Sans', 'Neue Montreal', -apple-system, sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+    --edge: clamp(24px, 5vw, 64px);
+    --max: 1360px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--body);
+    -webkit-font-smoothing:antialiased; line-height:1.5; overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--accent); color:#fff;}
+  .accent{color:var(--accent);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding-left:var(--edge); padding-right:var(--edge);}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .9s cubic-bezier(.16,.8,.24,1), transform .9s cubic-bezier(.16,.8,.24,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:22px var(--edge);
+    display:flex; align-items:center; justify-content:space-between;
+    transition: background .5s ease, backdrop-filter .5s ease, padding .4s ease, border-color .5s ease;
+    border-bottom:1px solid transparent;
+  }
+  .nav.scrolled{
+    background:rgba(248,248,245,0.72);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+    padding-top:16px; padding-bottom:16px;
+  }
+  .nav .mark{font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em;}
+  .nav ul{list-style:none; display:flex; gap:32px;}
+  .nav li a{
+    font-size:14px; color:var(--text-2); position:relative; padding-bottom:2px;
+    transition:color .3s ease;
+  }
+  .nav li a::after{
+    content:''; position:absolute; left:0; right:0; bottom:-2px; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:right;
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .nav li a:hover{color:var(--text);}
+  .nav li a:hover::after{transform:scaleX(1); transform-origin:left;}
+
+  /* ---------- placeholder imagery ---------- */
+  .placeholder-img{
+    background:
+      linear-gradient(135deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+      linear-gradient(45deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+      #EFEFEC;
+    background-size: 42px 42px;
+    border:1px solid var(--border);
+    display:flex; align-items:flex-end; justify-content:flex-start;
+    color:var(--text-2); font-size:11.5px; letter-spacing:0.02em;
+    overflow:hidden; position:relative;
+  }
+  .placeholder-img span{
+    background:rgba(248,248,245,0.9); padding:7px 12px; margin:12px;
+    border:1px solid var(--border);
+  }
+  /* Flexible real-image system: never forces a fixed ratio, never crops */
+  .cs-img{display:block; width:100%; height:auto; object-fit:contain;}
+
+  section{position:relative;}
+
+  /* ---------- case hero ---------- */
+  .case-hero{padding-top:170px; padding-bottom:100px;}
+  .case-hero .eyebrow{font-size:13px; color:var(--text-2); letter-spacing:0.02em; margin-bottom:22px; display:block;}
+  .case-hero .proj-name{
+    font-family:var(--display); font-weight:500; font-size:clamp(16px,1.6vw,19px);
+    color:var(--text-2); margin-bottom:18px;
+  }
+  .case-hero h1{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(34px, 5.4vw, 76px);
+    line-height:1.06; letter-spacing:-0.025em; max-width:16ch;
+  }
+  .case-hero h1 .accent{color:var(--accent);}
+  @media (min-width:861px){
+    .case-hero h1{max-width:34ch;}
+  }
+  .case-hero .meta-row{
+    margin-top:56px; display:flex; justify-content:space-between; align-items:baseline;
+    flex-wrap:wrap; gap:16px; border-top:1px solid var(--border); padding-top:24px;
+  }
+  .case-hero .scope{font-size:13.5px; color:var(--text-2);}
+  .case-hero .dates{font-size:13.5px; color:var(--text-2);}
+
+  /* ---------- section labels ---------- */
+  .s-label{font-size:13px; color:var(--text-2); letter-spacing:0.02em;}
+  .s-label .accent{color:var(--accent);}
+
+  /* ---------- overview ---------- */
+  .overview{padding-top:60px; padding-bottom:0;}
+  .overview-grid{display:grid; grid-template-columns:160px 1fr; gap:0 48px; align-items:start;}
+  .overview-grid p{
+    font-family:var(--display); font-weight:500; font-size:clamp(20px,2.2vw,28px);
+    line-height:1.42; letter-spacing:-0.01em; max-width:62ch; margin-top:8px;
+  }
+  .primary-visual{margin-top:80px;}
+
+  /* ---------- challenge ---------- */
+  .challenge{padding-top:120px; padding-bottom:90px;}
+  .challenge-grid{display:grid; grid-template-columns:1.4fr 1fr; gap:0 56px; align-items:start;}
+  .challenge .statement{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(30px, 4.6vw, 58px); line-height:1.1; letter-spacing:-0.02em;
+  }
+  .challenge-side{padding-top:10px;}
+  .challenge-side .s-label{margin-bottom:22px; display:block;}
+  .challenge .copy{color:var(--text-2); font-size:15.5px; max-width:40ch; line-height:1.65;}
+  .challenge-visual{margin-top:64px; display:flex; justify-content:flex-end;}
+  .challenge-visual .frame{width:84%;}
+  @media (max-width:860px){
+    .challenge-grid{grid-template-columns:1fr; gap:32px;}
+  }
+
+  /* ---------- approach ---------- */
+  .approach{padding-top:120px; padding-bottom:110px;}
+  .approach .s-label{margin-bottom:34px; display:block;}
+  .approach .intro{color:var(--text-2); font-size:15.5px; line-height:1.65; margin-bottom:56px;}
+  .approach-index{border-top:1px solid var(--border);}
+  .approach-row{
+    display:grid; grid-template-columns:70px 280px 1fr; gap:24px; align-items:baseline;
+    padding:28px 0; border-bottom:1px solid var(--border);
+  }
+  .approach-row .idx{font-family:var(--display); font-size:14px; color:var(--accent);}
+  .approach-row .a-title{font-family:var(--display); font-weight:500; font-size:clamp(19px,1.9vw,24px); letter-spacing:-0.01em;}
+  .approach-row .a-sub{color:var(--text-2); font-size:14px; line-height:1.6;}
+  @media (min-width:861px){
+    .approach .intro{column-count:2; column-gap:56px; max-width:none;}
+  }
+
+  /* ---------- execution ---------- */
+  .execution{padding-top:120px; padding-bottom:20px;}
+  .execution > .wrap > .s-label{margin-bottom:26px; display:block;}
+  .init{padding-top:80px; padding-bottom:80px; border-top:1px solid var(--border);}
+  .init:first-of-type{border-top:none;}
+  .init-head{margin-bottom:40px;}
+  .init-head h3{font-family:var(--display); font-weight:600; font-size:clamp(22px,2.6vw,32px); letter-spacing:-0.015em;}
+  .init-head .scope-line{color:var(--text-2); font-size:13.5px; margin-top:10px; max-width:60ch;}
+  .init-head .info-line{color:var(--text-2); font-size:13.5px; margin-top:10px;}
+  .init-head .ctx{color:var(--text-2); font-size:15px; margin-top:14px; max-width:56ch; line-height:1.65;}
+
+  /* A. Ongoing Digital Communication — sequential, full-width compositions */
+  .init-a .stack{display:flex; flex-direction:column; gap:24px; margin-top:0;}
+
+  /* B. Green Ideas — single dominant visual */
+  .init-b .green-year-block{margin-top:44px;}
+  .init-b .green-year-block + .green-year-block{margin-top:96px;}
+  .init-b .year-tag{
+    font-family:var(--display); font-weight:500; font-size:13px; color:var(--text-2);
+    letter-spacing:0.03em; display:block; margin-bottom:24px;
+  }
+  .init-b .green-visual + .green-visual{margin-top:56px;}
+
+  /* C. Conexión Plástica — editorial spread */
+  .init-c .magazine{margin-top:44px;}
+
+  /* D. Perspectiva Circular — contained, smaller */
+  .init-d .contained{display:flex; justify-content:center; margin-top:44px;}
+  .init-d .contained-grid{width:100%;}
+
+  /* ---------- impact ---------- */
+  .impact{padding-top:130px; padding-bottom:130px; text-align:center;}
+  .impact .s-label{display:block; margin-bottom:14px;}
+  .impact .period{
+    font-family:var(--display); font-weight:500; font-size:clamp(17px,1.8vw,21px);
+    color:var(--text-2); margin-bottom:70px;
+  }
+  .impact-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:40px 24px;}
+  .impact-item .num{
+    font-family:var(--display); font-weight:600; font-size:clamp(38px,4.6vw,64px);
+    letter-spacing:-0.02em; color:var(--accent);
+  }
+  .impact-item .num.dark{color:var(--text);}
+  .impact-item .lbl{font-size:13.5px; color:var(--text-2); margin-top:10px;}
+  .impact-item .sub{font-size:11.5px; color:var(--text-2); margin-top:6px;}
+
+  /* ---------- closing ---------- */
+  .case-closing{padding-top:130px; padding-bottom:130px;}
+  .closing-grid{display:grid; grid-template-columns:280px 1fr; gap:0 56px; align-items:start;}
+  .case-closing .lead{color:var(--text-2); font-size:15.5px; line-height:1.65; padding-top:8px;}
+  .case-closing .statement{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(30px, 4.4vw, 56px); line-height:1.14; letter-spacing:-0.02em;
+  }
+  .case-closing .statement .accent{color:var(--accent);}
+  @media (max-width:860px){
+    .closing-grid{grid-template-columns:1fr; gap:32px;}
+  }
+
+  /* ---------- next project ---------- */
+  .next-project{padding-top:80px; padding-bottom:120px; border-top:1px solid var(--border);}
+  .next-project a{display:block;}
+  .next-project .s-label{margin-bottom:22px; display:block;}
+  .next-project .next-name{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(44px, 8vw, 110px); letter-spacing:-0.025em; line-height:1;
+    transition:color .3s ease, transform .35s cubic-bezier(.16,.8,.24,1);
+    display:inline-block;
+  }
+  .next-project a:hover .next-name{color:var(--accent); transform:translateX(8px);}
+
+  /* ---------- footer ---------- */
+  .site-footer{padding:36px var(--edge); border-top:1px solid var(--border);}
+  .site-footer .row{
+    max-width:var(--max); margin:0 auto; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--text-2);
+  }
+  .site-footer a{color:var(--text-2); transition:color .3s ease;}
+  .site-footer a:hover{color:var(--text);}
+  .site-footer .flinks{display:flex; gap:20px;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .overview-grid{grid-template-columns:1fr; gap:16px;}
+    .challenge-visual{justify-content:flex-start;}
+    .challenge-visual .frame{width:100%;}
+    .approach-row{grid-template-columns:32px 1fr; row-gap:8px;}
+    .approach-row .a-sub{grid-column:1/-1; padding-left:32px;}
+    .impact-grid{grid-template-columns:repeat(2, 1fr); gap:40px 20px;}
+    .case-hero .meta-row{flex-direction:column; align-items:flex-start;}
+    .next-project .next-name{font-size:clamp(40px,14vw,64px);}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="Homepage_HiFi.html" class="mark">Theresa Rodas</a>
+  <ul>
+    <li><a href="Homepage_HiFi.html#work">Back to Work</a></li>
+    <li><a href="Homepage_HiFi.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="case-hero wrap">
+    <span class="eyebrow reveal">01 / Coguaplast</span>
+    <div class="proj-name reveal">Coguaplast</div>
+    <h1 class="reveal">Building an <span class="accent">ongoing digital presence</span> for Guatemala's plastics industry.</h1>
+    <div class="meta-row reveal">
+      <span class="scope">Content Strategy · Social Media · Digital Marketing · Graphic Design</span>
+      <span class="dates">2024 — Present</span>
+    </div>
+  </section>
+
+  <section class="overview wrap">
+    <div class="overview-grid reveal">
+      <span class="s-label">Overview <span class="accent">/ 01</span></span>
+      <p>Coguaplast is the Guatemalan Plastics Association, representing and connecting companies across the country's plastics industry. Since 2024, I've worked with the organization across content, social media and digital marketing, supporting its communication through an ongoing collaboration that has expanded into events, editorial projects and sector initiatives.</p>
+    </div>
+    <div class="primary-visual reveal">
+      <img class="cs-img" src="images/Portada_-_Coguaplast.jpg" alt="Coguaplast — primary visual">
+    </div>
+  </section>
+
+  <section class="challenge wrap">
+    <div class="challenge-grid reveal">
+      <div class="statement">One organization.<br>Different audiences.<br>Different initiatives.</div>
+      <div class="challenge-side">
+        <span class="s-label">The Challenge <span class="accent">/ 02</span></span>
+        <p class="copy">As an industry association, Coguaplast communicates with different audiences and across different initiatives, from sector information and sustainability topics to events, educational content and institutional communication. The challenge is to turn that variety into digital content that feels clear, relevant and consistent while adapting the communication to each initiative.</p>
+      </div>
+    </div>
+    <div class="challenge-visual reveal">
+      <div class="frame"><img class="cs-img" src="images/Challenge_-_Coguaplast.png" alt="Coguaplast waste-classification guide — editorial mockup"></div>
+    </div>
+  </section>
+
+  <section class="approach wrap">
+    <span class="s-label reveal">Approach <span class="accent">/ 03</span></span>
+    <p class="intro reveal">My approach starts by understanding the purpose behind each initiative and translating it into the right communication format. Rather than treating every piece of content the same way, I adapt the concept, visual direction and execution depending on the audience, channel and objective, while maintaining consistency across Coguaplast's broader communication.</p>
+    <div class="approach-index reveal">
+      <div class="approach-row">
+        <span class="idx">01</span>
+        <span class="a-title">Understand the message</span>
+        <span class="a-sub">Identify what needs to be communicated and why it matters.</span>
+      </div>
+      <div class="approach-row">
+        <span class="idx">02</span>
+        <span class="a-title">Shape the content</span>
+        <span class="a-sub">Translate information into concepts, formats and visual communication.</span>
+      </div>
+      <div class="approach-row">
+        <span class="idx">03</span>
+        <span class="a-title">Learn from performance</span>
+        <span class="a-sub">Review results and use them to inform upcoming content.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="execution wrap">
+    <span class="s-label reveal">Execution <span class="accent">/ 04</span></span>
+
+    <div class="init init-a reveal">
+      <div class="init-head">
+        <h3>01 — Ongoing Digital Communication</h3>
+        <div class="scope-line">Social media management · Content development · Reels · Paid media · Reporting · Event coverage</div>
+      </div>
+      <div class="stack">
+        <img class="cs-img" src="images/Ongoing-Coguaplast.jpg" alt="Coguaplast — Ongoing Digital Communication presentation">
+        <img class="cs-img" src="images/reels-coguaplast.jpg" alt="Coguaplast — Reels examples">
+      </div>
+    </div>
+
+    <div class="init init-b reveal">
+      <div class="init-head">
+        <h3>02 — Green Ideas</h3>
+        <div class="info-line">2025 + 2026</div>
+        <p class="ctx">Green Ideas is an event focused on sustainability, circularity and innovation within Guatemala's plastics industry. I developed the event's visual communication in 2025 and continued the work for its 2026 edition.</p>
+      </div>
+      <div class="green-year-block">
+        <span class="year-tag">2025</span>
+        <div class="green-visual"><img class="cs-img" src="images/Green-Ideas-2025.jpg" alt="Green Ideas 2025 — event visual system and applications"></div>
+        <div class="green-visual"><img class="cs-img" src="images/Green-Ideas-2025-2.jpg" alt="Green Ideas 2025 — event photography"></div>
+      </div>
+      <div class="green-year-block">
+        <span class="year-tag">2026</span>
+        <div class="green-visual"><img class="cs-img" src="images/Green-Ideas-2026.jpg" alt="Green Ideas 2026 — event visual system and applications"></div>
+        <div class="green-visual"><img class="cs-img" src="images/Green-Ideas-2026-2.jpg" alt="Green Ideas 2026 — event photography"></div>
+      </div>
+    </div>
+
+    <div class="init init-c reveal">
+      <div class="init-head">
+        <h3>03 — Conexión Plástica</h3>
+        <p class="ctx">Editorial design and development of Coguaplast's quarterly sector magazine, launched in 2026.</p>
+      </div>
+      <div class="magazine">
+        <img class="cs-img" src="images/Revista-Conexion-Plastica.jpg" alt="Conexión Plástica — Coguaplast quarterly magazine">
+      </div>
+    </div>
+
+    <div class="init init-d reveal">
+      <div class="init-head">
+        <h3>04 — Perspectiva Circular</h3>
+        <p class="ctx">Visual identity developed in 2025 for Coguaplast's podcast focused on the plastics sector and circularity.</p>
+      </div>
+      <div class="contained">
+        <div class="contained-grid">
+          <img class="cs-img" src="images/Perspectiva-Circular.jpg" alt="Perspectiva Circular — podcast visual identity">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="impact wrap">
+    <span class="s-label reveal">Impact <span class="accent">/ 05</span></span>
+    <div class="period reveal">First 6 months · 2025 vs. 2026</div>
+    <div class="impact-grid reveal">
+      <div class="impact-item">
+        <div class="num" data-target="188" data-prefix="+" data-suffix="%">+188%</div>
+        <div class="lbl">Facebook interactions</div>
+      </div>
+      <div class="impact-item">
+        <div class="num" data-target="65" data-prefix="+" data-suffix="%">+65%</div>
+        <div class="lbl">Instagram reach</div>
+      </div>
+      <div class="impact-item">
+        <div class="num" data-target="31" data-prefix="+" data-suffix="%">+31%</div>
+        <div class="lbl">Instagram followers</div>
+      </div>
+      <div class="impact-item">
+        <div class="num dark" data-target="3.4" data-decimals="1" data-suffix="%">3.4%</div>
+        <div class="lbl">Facebook engagement rate</div>
+        <div class="sub">1.33% in the first 6 months of 2025 → 3.40% in the first 6 months of 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-closing wrap">
+    <div class="closing-grid reveal">
+      <p class="lead">What began as ongoing digital communication has grown into a broader creative collaboration across social media, events, editorial content and new communication initiatives. The work has continued to evolve alongside Coguaplast's needs.</p>
+      <div class="statement">An evolving collaboration, built across <span class="accent">content, communication and design.</span></div>
+    </div>
+  </section>
+
+  <section class="next-project wrap reveal">
+    <a href="work-diestrader.html">
+      <span class="s-label">NEXT PROJECT <span class="accent">/ 02</span></span>
+      <span class="next-name">Diestrader →</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="row">
+    <span>© 2026 Theresa Rodas</span>
+    <div class="flinks">
+      <a href="mailto:hello.caprirosa@gmail.com">hello.caprirosa@gmail.com</a>
+      <a href="https://www.linkedin.com/in/theresa-rodas-3bb111124/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.behance.net/throdas" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Impact count-up (runs once, skipped entirely for reduced motion) ---------- */
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReducedMotion){
+    function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+    function animateCount(el){
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1150;
+      const start = performance.now();
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const val = target * easeOutCubic(p);
+        el.textContent = prefix + val.toFixed(decimals) + suffix;
+        if(p < 1){ requestAnimationFrame(step); }
+        else { el.textContent = prefix + target.toFixed(decimals) + suffix; }
+      }
+      requestAnimationFrame(step);
+    }
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ animateCount(e.target); countIO.unobserve(e.target); }
+      });
+    }, {threshold:0.4});
+    document.querySelectorAll('.impact-item .num[data-target]').forEach(el => countIO.observe(el));
+  }
+</script>
+
+</body>
+</html>

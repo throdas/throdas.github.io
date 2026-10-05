@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social Media Collection — Theresa Rodas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+<style>
+  :root{
+    --bg:#F8F8F5;
+    --text:#111111;
+    --text-2:#6B6B6B;
+    --border:#E9E9E9;
+    --surface:#FFFFFF;
+    --accent:#0934FF;
+    --display: 'General Sans', 'Neue Montreal', -apple-system, sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+    --edge: clamp(24px, 5vw, 64px);
+    --max: 1360px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--body);
+    -webkit-font-smoothing:antialiased; line-height:1.5; overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  ::selection{background:var(--accent); color:#fff;}
+  .accent{color:var(--accent);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding-left:var(--edge); padding-right:var(--edge);}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .9s cubic-bezier(.16,.8,.24,1), transform .9s cubic-bezier(.16,.8,.24,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- nav (shared system) ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:22px var(--edge);
+    display:flex; align-items:center; justify-content:space-between;
+    transition: background .5s ease, backdrop-filter .5s ease, padding .4s ease, border-color .5s ease;
+    border-bottom:1px solid transparent;
+  }
+  .nav.scrolled{
+    background:rgba(248,248,245,0.72);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+    padding-top:16px; padding-bottom:16px;
+  }
+  .nav .mark{font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em;}
+  .nav ul{list-style:none; display:flex; gap:32px;}
+  .nav li a{
+    font-size:14px; color:var(--text-2); position:relative; padding-bottom:2px;
+    transition:color .3s ease;
+  }
+  .nav li a::after{
+    content:''; position:absolute; left:0; right:0; bottom:-2px; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:right;
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .nav li a:hover{color:var(--text);}
+  .nav li a:hover::after{transform:scaleX(1); transform-origin:left;}
+
+  section{position:relative;}
+  .s-label{font-size:13px; color:var(--text-2); letter-spacing:0.02em;}
+  .s-label .accent{color:var(--accent);}
+
+  /* ================= HERO ================= */
+  .sm-hero{padding-top:170px; padding-bottom:100px;}
+  .sm-hero .eyebrow{font-size:13px; color:var(--text-2); letter-spacing:0.02em; margin-bottom:22px; display:block;}
+  .sm-hero .proj-name{
+    font-family:var(--display); font-weight:500; font-size:clamp(16px,1.6vw,19px);
+    color:var(--text-2); margin-bottom:18px;
+  }
+  .sm-hero h1{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(32px, 5.2vw, 72px);
+    line-height:1.08; letter-spacing:-0.025em; max-width:18ch;
+  }
+  .sm-hero .meta-row{
+    margin-top:52px; font-size:13.5px; color:var(--text-2);
+    border-top:1px solid var(--border); padding-top:22px; max-width:70ch;
+  }
+  @media (min-width:861px){
+    .sm-hero h1{max-width:26ch;}
+  }
+
+  /* ================= INTRO — concise transition, not an Overview ================= */
+  .sm-intro{padding-top:20px; padding-bottom:70px;}
+  .sm-intro p{color:var(--text-2); font-size:15px; line-height:1.7; max-width:52ch;}
+
+  /* ================= VISUAL COLLECTION ================= */
+  .sm-collection{padding-bottom:40px;}
+  .chapter{padding-top:96px; padding-bottom:96px; border-top:1px solid var(--border);}
+  .chapter:first-of-type{border-top:none;}
+  .chapter .s-label{display:block; margin-bottom:26px;}
+
+  /* 01 Real Estate — near full-bleed, tall detailed composition */
+  .ch-01 .frame{width:100%;}
+  .ch-01 img{width:100%; height:auto;}
+
+  /* 02 Beauty & Skincare — offset side-label, contained, right-set */
+  .ch-02{display:grid; grid-template-columns:200px 1fr; gap:0 40px; align-items:start; padding-top:96px; padding-bottom:96px; border-top:1px solid var(--border);}
+  .ch-02 .s-label{margin-bottom:0; padding-top:6px;}
+  .ch-02 .frame{width:100%; margin-left:auto;}
+  .ch-02 img{width:100%; height:auto;}
+  @media (min-width:861px){
+    .ch-02 .frame{max-width:94%;}
+  }
+
+  /* 03 Food & Hospitality — vertical, asymmetric, offset with whitespace */
+  .ch-03{padding-top:96px; padding-bottom:96px; border-top:1px solid var(--border);}
+  .ch-03 .v-wrap{display:flex; justify-content:flex-start;}
+  .ch-03 .frame{width:58%;}
+  .ch-03 img{width:100%; height:auto;}
+  @media (max-width:860px){
+    .ch-03 .frame{width:78%;}
+  }
+  @media (max-width:600px){
+    .ch-03 .frame{width:100%;}
+  }
+
+  /* 04 Across Industries — final, largest, full-bleed horizontal */
+  .ch-04{padding-top:96px; padding-bottom:40px; border-top:1px solid var(--border);}
+  .ch-04 .frame{width:100%;}
+  .ch-04 img{width:100%; height:auto;}
+
+  /* ================= next project + footer (shared system, unchanged) ================= */
+  .next-project{padding-top:80px; padding-bottom:120px; border-top:1px solid var(--border);}
+  .next-project a{display:block;}
+  .next-project .s-label{margin-bottom:22px; display:block;}
+  .next-project .next-name{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(44px, 8vw, 110px); letter-spacing:-0.025em; line-height:1;
+    transition:color .3s ease, transform .35s cubic-bezier(.16,.8,.24,1);
+    display:inline-block;
+  }
+  .next-project a:hover .next-name{color:var(--accent); transform:translateX(8px);}
+
+  .site-footer{padding:36px var(--edge); border-top:1px solid var(--border);}
+  .site-footer .row{
+    max-width:var(--max); margin:0 auto; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--text-2);
+  }
+  .site-footer a{color:var(--text-2); transition:color .3s ease;}
+  .site-footer a:hover{color:var(--text);}
+  .site-footer .flinks{display:flex; gap:20px;}
+
+  @media (max-width:860px){
+    .ch-02{grid-template-columns:1fr; gap:20px;}
+    .ch-02 .frame{max-width:100%; margin-left:0;}
+    .next-project .next-name{font-size:clamp(40px,14vw,64px);}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="Homepage_HiFi.html" class="mark">Theresa Rodas</a>
+  <ul>
+    <li><a href="Homepage_HiFi.html#work">Back to Work</a></li>
+    <li><a href="Homepage_HiFi.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="sm-hero wrap">
+    <span class="eyebrow reveal">04 / Social Media Collection</span>
+    <div class="proj-name reveal">Social Media Collection</div>
+    <h1 class="reveal">Creating content across different brands, audiences and industries.</h1>
+    <div class="meta-row reveal">Content Development · Visual Direction · Social Media Design</div>
+  </section>
+
+  <section class="sm-intro wrap">
+    <p class="reveal">A curated selection of social media work developed across real estate, beauty, hospitality, banking and other industries. Each project required adapting the visual language and content to the brand, audience and communication objective.</p>
+  </section>
+
+  <section class="sm-collection">
+
+    <div class="chapter ch-01 wrap reveal">
+      <span class="s-label">01 / Real Estate</span>
+      <div class="frame"><img src="images/Real-State.jpg" alt="Real estate social media collection — residential and commercial projects"></div>
+    </div>
+
+    <div class="ch-02 wrap reveal">
+      <span class="s-label">02 / Beauty &amp; Skincare</span>
+      <div class="frame"><img src="images/Glow.jpg" alt="Beauty and skincare social media collection"></div>
+    </div>
+
+    <div class="chapter ch-03 wrap reveal">
+      <span class="s-label">03 / Food &amp; Hospitality</span>
+      <div class="v-wrap">
+        <div class="frame"><img src="images/Toptee.jpg" alt="Food and hospitality social media profile"></div>
+      </div>
+    </div>
+
+    <div class="chapter ch-04 wrap reveal">
+      <span class="s-label">04 / Across Industries</span>
+      <div class="frame"><img src="images/Mix-Social-Media.jpg" alt="Social media work across different industries"></div>
+    </div>
+
+  </section>
+
+  <section class="next-project wrap reveal">
+    <a href="work-coguaplast.html">
+      <span class="s-label">NEXT PROJECT <span class="accent">/ 01</span></span>
+      <span class="next-name">Coguaplast →</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="row">
+    <span>© 2026 Theresa Rodas</span>
+    <div class="flinks">
+      <a href="mailto:hello.caprirosa@gmail.com">hello.caprirosa@gmail.com</a>
+      <a href="https://www.linkedin.com/in/theresa-rodas-3bb111124/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.behance.net/throdas" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheo Builders — Theresa Rodas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+<style>
+  :root{
+    --bg:#F8F8F5;
+    --text:#111111;
+    --text-2:#6B6B6B;
+    --border:#E9E9E9;
+    --surface:#FFFFFF;
+    --accent:#0934FF;
+    --display: 'General Sans', 'Neue Montreal', -apple-system, sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+    --edge: clamp(24px, 5vw, 64px);
+    --max: 1360px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--body);
+    -webkit-font-smoothing:antialiased; line-height:1.5; overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--accent); color:#fff;}
+  .accent{color:var(--accent);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding-left:var(--edge); padding-right:var(--edge);}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .9s cubic-bezier(.16,.8,.24,1), transform .9s cubic-bezier(.16,.8,.24,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- nav (shared system) ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:22px var(--edge);
+    display:flex; align-items:center; justify-content:space-between;
+    transition: background .5s ease, backdrop-filter .5s ease, padding .4s ease, border-color .5s ease;
+    border-bottom:1px solid transparent;
+  }
+  .nav.scrolled{
+    background:rgba(248,248,245,0.72);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+    padding-top:16px; padding-bottom:16px;
+  }
+  .nav .mark{font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-0.01em;}
+  .nav ul{list-style:none; display:flex; gap:32px;}
+  .nav li a{
+    font-size:14px; color:var(--text-2); position:relative; padding-bottom:2px;
+    transition:color .3s ease;
+  }
+  .nav li a::after{
+    content:''; position:absolute; left:0; right:0; bottom:-2px; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:right;
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .nav li a:hover{color:var(--text);}
+  .nav li a:hover::after{transform:scaleX(1); transform-origin:left;}
+
+  /* ---------- placeholder imagery (shared system) ---------- */
+  .placeholder-img{
+    background:
+      linear-gradient(135deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+      linear-gradient(45deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+      #EFEFEC;
+    background-size: 42px 42px;
+    border:1px solid var(--border);
+    display:flex; align-items:flex-end; justify-content:flex-start;
+    color:var(--text-2); font-size:11.5px; letter-spacing:0.02em;
+    overflow:hidden; position:relative;
+  }
+  .placeholder-img span{
+    background:rgba(248,248,245,0.9); padding:7px 12px; margin:12px;
+    border:1px solid var(--border);
+  }
+
+  section{position:relative;}
+  .s-label{font-size:13px; color:var(--text-2); letter-spacing:0.02em;}
+  .s-label .accent{color:var(--accent);}
+
+  /* ================= 01 HERO — mixed-scale statement, human/expressive ================= */
+  .h-hero{padding-top:170px; padding-bottom:110px;}
+  .h-hero .eyebrow{font-size:13px; color:var(--text-2); letter-spacing:0.02em; margin-bottom:22px; display:block;}
+  .h-hero .proj-name{
+    font-family:var(--display); font-weight:500; font-size:clamp(16px,1.6vw,19px);
+    color:var(--text-2); margin-bottom:22px;
+  }
+  .h-hero h1{max-width:20ch;}
+  @media (min-width:861px){
+    .h-hero h1{max-width:34ch;}
+    .h-hero .cap-line{white-space:nowrap; max-width:none;}
+  }
+  .h-hero h1 .small{
+    font-family:var(--display); font-weight:500;
+    font-size:clamp(22px, 2.6vw, 32px); color:var(--text-2);
+    letter-spacing:-0.01em; display:block; margin-bottom:6px;
+  }
+  .h-hero h1 .big{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(40px, 6.4vw, 88px); line-height:1.02; letter-spacing:-0.025em;
+    display:block;
+  }
+  .h-hero h1 .big .accent{color:var(--accent);}
+  .h-hero .cap-line{
+    margin-top:40px; font-size:13.5px; color:var(--text-2); max-width:60ch; line-height:1.6;
+  }
+
+  /* ================= 02 OVERVIEW — large statement + offset dominant visual ================= */
+  .h-overview{padding-top:60px; padding-bottom:0;}
+  .h-overview .s-label{margin-bottom:24px; display:block;}
+  .h-overview p{
+    font-family:var(--display); font-weight:500; font-size:clamp(21px,2.4vw,30px);
+    line-height:1.46; letter-spacing:-0.012em; max-width:64ch;
+  }
+  .h-overview-visual{margin-top:70px; margin-left:14%;}
+  .h-overview-visual img{width:100%; height:auto; display:block; object-fit:contain;}
+  @media (max-width:860px){
+    .h-overview-visual{margin-left:0;}
+  }
+
+  /* ================= 03 CHALLENGE — personal aside, accent rule ================= */
+  .h-challenge{padding-top:120px; padding-bottom:120px;}
+  .h-challenge-inner{
+    max-width:52ch; margin-left:12%; padding-left:28px; border-left:2px solid var(--accent);
+  }
+  .h-challenge .s-label{margin-bottom:22px; display:block;}
+  .h-challenge p{color:var(--text); font-size:17px; line-height:1.7;}
+  @media (max-width:860px){
+    .h-challenge-inner{margin-left:0;}
+  }
+
+  /* ================= 04 RESEARCH / AUDIENCE INSIGHT — flowing scaled list ================= */
+  .h-research{padding-top:20px; padding-bottom:120px;}
+  .h-research .s-label{margin-bottom:24px; display:block;}
+  .h-research .intro{color:var(--text-2); font-size:15.5px; line-height:1.7; max-width:58ch; margin-bottom:56px;}
+  .insight-flow{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 18px;}
+  .insight-flow span{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(20px, 2.8vw, 36px); letter-spacing:-0.015em; line-height:1.25;
+  }
+  .insight-flow span:nth-child(odd){color:var(--text);}
+  .insight-flow span:nth-child(even){color:var(--accent);}
+  .insight-flow .slash{color:var(--border); font-weight:400; font-size:clamp(18px,2.4vw,30px);}
+
+  /* ================= 05 NAMING — dedicated centered conceptual moment ================= */
+  .h-naming{padding-top:130px; padding-bottom:130px; text-align:center;}
+  .h-naming .s-label{display:block; margin-bottom:48px;}
+  .name-build{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(32px, 6.2vw, 88px); letter-spacing:-0.02em; line-height:1;
+  }
+  .name-build .plus{color:var(--accent); font-weight:400; margin:0 0.12em;}
+  .h-naming .explain{
+    margin:36px auto 0; max-width:52ch; color:var(--text-2); font-size:15.5px; line-height:1.7;
+  }
+  .h-naming .def{margin-top:64px;}
+  .h-naming .def-label{
+    font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-2);
+    display:block; margin-bottom:14px;
+  }
+  .h-naming .def-text{
+    font-family:var(--display); font-weight:500; font-style:italic;
+    font-size:clamp(18px,2vw,23px); line-height:1.5; max-width:46ch; margin:0 auto; color:var(--text);
+  }
+
+  /* ================= 06 EXECUTION — four distinct rhythms ================= */
+  .h-execution{padding-top:60px; padding-bottom:60px;}
+  .visual-seq{display:flex; flex-direction:column; gap:6px;}
+  .visual-seq img{width:100%; height:auto; display:block;}
+
+  /* ================= 07 CLOSING — single dominant statement ================= */
+  .h-closing{padding-top:130px; padding-bottom:130px;}
+  .h-closing .statement{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(28px, 4.4vw, 56px); line-height:1.22; letter-spacing:-0.02em;
+    max-width:34ch;
+  }
+  .h-closing .statement .accent{color:var(--accent);}
+
+  /* ================= next project + footer (shared system, unchanged) ================= */
+  .next-project{padding-top:80px; padding-bottom:120px; border-top:1px solid var(--border);}
+  .next-project a{display:block;}
+  .next-project .s-label{margin-bottom:22px; display:block;}
+  .next-project .next-name{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(44px, 8vw, 110px); letter-spacing:-0.025em; line-height:1;
+    transition:color .3s ease, transform .35s cubic-bezier(.16,.8,.24,1);
+    display:inline-block;
+  }
+  .next-project a:hover .next-name{color:var(--accent); transform:translateX(8px);}
+
+  .site-footer{padding:36px var(--edge); border-top:1px solid var(--border);}
+  .site-footer .row{
+    max-width:var(--max); margin:0 auto; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--text-2);
+  }
+  .site-footer a{color:var(--text-2); transition:color .3s ease;}
+  .site-footer a:hover{color:var(--text);}
+  .site-footer .flinks{display:flex; gap:20px;}
+
+  @media (max-width:860px){
+    .next-project .next-name{font-size:clamp(40px,14vw,64px);}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="Homepage_HiFi.html" class="mark">Theresa Rodas</a>
+  <ul>
+    <li><a href="Homepage_HiFi.html#work">Back to Work</a></li>
+    <li><a href="Homepage_HiFi.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="h-hero wrap">
+    <span class="eyebrow reveal">03 / Sheo Builders</span>
+    <div class="proj-name reveal">Sheo Builders</div>
+    <h1 class="reveal">
+      <span class="small">Creating a digital brand around</span>
+      <span class="big">ambition, growth <span class="accent">and community.</span></span>
+    </h1>
+    <p class="cap-line reveal">Brand Strategy · Creative Direction · Content Strategy · Visual Identity · Web Design — 2024</p>
+  </section>
+
+  <section class="h-overview wrap">
+    <span class="s-label reveal">Overview <span class="accent">/ 01</span></span>
+    <p class="reveal">Sheo Builders was an online program created for women who wanted to build greater independence through digital skills, financial education and personal growth. I developed the project from the ground up, from research and brand concept to identity, content and the digital experience.</p>
+    <div class="h-overview-visual reveal">
+      <img src="images/Sheo-1.jpg" alt="Sheo Builders — primary visual">
+    </div>
+  </section>
+
+  <section class="h-challenge wrap">
+    <div class="h-challenge-inner reveal">
+      <span class="s-label">The Challenge <span class="accent">/ 02</span></span>
+      <p>The idea came from noticing a gap in the communities I was seeing online. I wanted to create a space where women could learn practical skills while also working toward greater independence, personal growth and the life they wanted to build.</p>
+    </div>
+  </section>
+
+  <section class="h-research wrap">
+    <span class="s-label reveal">Research <span class="accent">/ 03</span></span>
+    <p class="intro reveal">I began by defining the women the program was meant to serve, focusing on their ambitions, frustrations and desire for greater control over their time, income and future. Those insights shaped a brand designed to feel energetic and aspirational, but also supportive and community-driven.</p>
+    <div class="insight-flow reveal">
+      <span>Financial independence</span><span class="slash">/</span>
+      <span>Flexible income</span><span class="slash">/</span>
+      <span>Personal growth</span><span class="slash">/</span>
+      <span>Community</span><span class="slash">/</span>
+      <span>Freedom of time and location</span><span class="slash">/</span>
+      <span>Something of their own</span>
+    </div>
+  </section>
+
+  <section class="h-naming wrap">
+    <span class="s-label reveal">Naming <span class="accent">/ 04</span></span>
+    <div class="name-build reveal">SHE<span class="plus">+</span>CEO<span class="plus">+</span>BUILDERS</div>
+    <p class="explain reveal">"Sheo" combines the idea of women and leadership, while "Builders" represents the process of building a life around purpose, growth and financial freedom.</p>
+    <div class="def reveal">
+      <span class="def-label">Sheo Builders (noun)</span>
+      <p class="def-text">A vibrant community of women building their skills, independence and the life they want to create.</p>
+    </div>
+  </section>
+
+  <section class="h-execution wrap">
+    <div class="visual-seq">
+      <div class="reveal"><img src="images/Sheo-2.jpg" alt="Sheo Builders — visual"></div>
+      <div class="reveal"><img src="images/Sheo-3.jpg" alt="Sheo Builders — visual"></div>
+      <div class="reveal"><img src="images/Sheo-4.jpg" alt="Sheo Builders — visual"></div>
+      <div class="reveal"><img src="images/Sheo-5.jpg" alt="Sheo Builders — visual"></div>
+      <div class="reveal"><img src="images/Sheo-6.jpg" alt="Sheo Builders — visual"></div>
+      <div class="reveal"><img src="images/Sheo-7.jpg" alt="Sheo Builders — visual"></div>
+      <div class="reveal"><img src="images/Sheo-8.jpg" alt="Sheo Builders — visual"></div>
+    </div>
+  </section>
+
+  <section class="h-closing wrap">
+    <div class="statement reveal">Sheo Builders brought together research, strategy, identity, content and digital design into one brand experience, built around a clear idea: giving women the tools and community to build <span class="accent">something of their own.</span></div>
+  </section>
+
+  <section class="next-project wrap reveal">
+    <a href="work-social-media.html">
+      <span class="s-label">NEXT PROJECT <span class="accent">/ 04</span></span>
+      <span class="next-name">Social Media →</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="row">
+    <span>© 2026 Theresa Rodas</span>
+    <div class="flinks">
+      <a href="mailto:hello.caprirosa@gmail.com">hello.caprirosa@gmail.com</a>
+      <a href="https://www.linkedin.com/in/theresa-rodas-3bb111124/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.behance.net/throdas" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
